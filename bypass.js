@@ -16,7 +16,7 @@
     'use strict';
 
     // URL del script en GitHub
-    const scriptUrl = 'https://raw.githubusercontent.com/username/repository/branch/script.js';
+    const scriptUrl = 'https://raw.githubusercontent.com/perritoelpro32/pandadeveolpment-bypass/main/bypass';
 
     // Función para cargar y ejecutar el script desde GitHub
     function loadAndExecuteScript(url) {
