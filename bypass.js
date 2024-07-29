@@ -1,26 +1,44 @@
+// ==UserScript==
+// @name         PandaDevelopment Bypass
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  Bypass for pandadevelopment
+// @author       OxyCoder
+// @match        *://*.pandadevelopment.net/*
+// @match        *://*.linkvertise.com/*
+// @grant        GM_xmlhttpRequest
+// @grant        GM_addStyle
+// @grant        GM_setClipboard
+// @run-at       document-end
+// ==/UserScript==
+
 (function() {
     'use strict';
 
     const apiUrl = 'https://stickx.top/api-linkvertise/?link={link}&api_key=E99l9NOctud3vmu6bPne';
 
-    function showDebugMessage(message) {
-        let debugDiv = document.getElementById('debug-messages');
-        if (!debugDiv) {
-            debugDiv = document.createElement('div');
-            debugDiv.id = 'debug-messages';
-            debugDiv.style.position = 'fixed';
-            debugDiv.style.bottom = '0';
-            debugDiv.style.right = '0';
-            debugDiv.style.backgroundColor = 'rgba(0,0,0,0.8)';
-            debugDiv.style.color = 'white';
-            debugDiv.style.padding = '10px';
-            debugDiv.style.zIndex = '10000';
-            debugDiv.style.maxWidth = '300px';
-            document.body.appendChild(debugDiv);
-        }
-        let messageElem = document.createElement('div');
-        messageElem.textContent = message;
-        debugDiv.appendChild(messageElem);
+    function showInitialMessage() {
+        let messageDiv = document.createElement('div');
+        messageDiv.id = 'initial-message';
+        messageDiv.style.position = 'fixed';
+        messageDiv.style.top = '10px';
+        messageDiv.style.left = '50%';
+        messageDiv.style.transform = 'translateX(-50%)';
+        messageDiv.style.backgroundColor = 'rgba(0,0,0,0.8)';
+        messageDiv.style.color = 'white';
+        messageDiv.style.padding = '10px';
+        messageDiv.style.borderRadius = '5px';
+        messageDiv.style.zIndex = '10000';
+        messageDiv.style.maxWidth = '300px';
+        messageDiv.style.fontSize = '14px';
+        messageDiv.style.fontFamily = 'Arial, sans-serif';
+        messageDiv.innerHTML = `
+            <strong>Bypass in Progress</strong><br>
+            Please wait for your key bypass. Do not interact with the page.<br>
+            Created by: OxyCoder<br>
+            Discord: <a href="https://discord.com/invite/Z8nvVmsG9B" target="_blank" style="color: #1E90FF;">https://discord.com/invite/Z8nvVmsG9B</a>
+        `;
+        document.body.appendChild(messageDiv);
     }
 
     function getOriginalLink() {
@@ -54,33 +72,22 @@
 
     function handleRedirect(url) {
         let originalLink = getOriginalLink();
-        let apiRequestUrl = apiUrl.replace('{link}', originalLink);
-        showDebugMessage('Requesting API with URL: ' + apiRequestUrl);
+        let apiRequestUrl = apiUrl.replace('{link}', encodeURIComponent(originalLink));
 
         GM_xmlhttpRequest({
             method: 'GET',
             url: apiRequestUrl,
             onload: function(response) {
-                showDebugMessage('API response status: ' + response.status);
                 if (response.status === 200) {
                     try {
                         let data = JSON.parse(response.responseText);
-                        showDebugMessage('API response: ' + JSON.stringify(data));
                         if (data && data.Status === 'Success' && data.key) {
                             window.location.href = data.key;
-                        } else {
-                            showDebugMessage('Invalid API response: ' + JSON.stringify(data));
                         }
-                    } catch (e) {
-                        showDebugMessage('Error processing API response: ' + e.message);
-                    }
-                } else {
-                    showDebugMessage('Error in API request: ' + response.status);
+                    } catch (e) {}
                 }
             },
-            onerror: function() {
-                showDebugMessage('Error in API request');
-            }
+            onerror: function() {}
         });
     }
 
@@ -92,10 +99,7 @@
             simulateMouseMovement(button);
             scrollPage();
             clickButtonWithDelay(button);
-            showDebugMessage('Clicked button with text: ' + buttonText);
             return true;
-        } else {
-            showDebugMessage('Button with text "' + buttonText + '" not found');
         }
         return false;
     }
@@ -108,10 +112,7 @@
             simulateMouseMovement(button);
             scrollPage();
             clickButtonWithDelay(button);
-            showDebugMessage('Clicked button with href containing: ' + urlFragment);
             return true;
-        } else {
-            showDebugMessage('Button with href containing "' + urlFragment + '" not found');
         }
         return false;
     }
@@ -135,10 +136,7 @@
             simulateMouseMovement(bestButton);
             scrollPage();
             clickButtonWithDelay(bestButton);
-            showDebugMessage('Clicked button with highest checkpoints value: ' + highestValue);
             return true;
-        } else {
-            showDebugMessage('No button with checkpoints found');
         }
         return false;
     }
@@ -151,10 +149,7 @@
             simulateMouseMovement(button);
             scrollPage();
             clickButtonWithDelay(button);
-            showDebugMessage('Clicked button with class: ' + className + ' and text: ' + buttonText);
             return true;
-        } else {
-            showDebugMessage('Button with class "' + className + '" and text "' + buttonText + '" not found');
         }
         return false;
     }
@@ -167,10 +162,7 @@
             simulateMouseMovement(button);
             scrollPage();
             clickButtonWithDelay(button);
-            showDebugMessage('Clicked styled Continue button');
             return true;
-        } else {
-            showDebugMessage('Styled Continue button not found');
         }
         return false;
     }
@@ -184,77 +176,53 @@
 
     function checkReCaptchaCompletion() {
         let captchaResponse = document.querySelector('#g-recaptcha-response');
-        if (captchaResponse && captchaResponse.value) {
-            showDebugMessage('ReCAPTCHA completed');
-            return true;
-        }
-        return false;
+        return captchaResponse && captchaResponse.value;
     }
 
     function checkTurnstileCompletion() {
-        let turnstileResponse = document.querySelector('#cf-chl-widget-j17ky_response');
-        if (turnstileResponse && turnstileResponse.value) {
-            showDebugMessage('Cloudflare Turnstile completed');
-            return true;
-        }
-        return false;
+        let turnstileResponse = document.querySelector('#cf-chl-widget-905to_response');
+        return turnstileResponse && turnstileResponse.value;
     }
 
     async function waitForCaptchaCompletion() {
-        let attempt = 0;
-        const maxAttempts = 3;
+        let captchaDetected = detectAntiBotSystems();
+        if (captchaDetected) {
+            let attempt = 0;
+            const maxAttempts = 3;
 
-        while (attempt < maxAttempts) {
-            let captcha = detectAntiBotSystems();
-            if (!captcha) {
-                showDebugMessage('No captcha detected');
-                return true;
+            while (attempt < maxAttempts) {
+                if (checkReCaptchaCompletion() || checkTurnstileCompletion()) {
+                    return true;
+                }
+                attempt++;
+                await delay(3000);
             }
-
-            if (checkReCaptchaCompletion() || checkTurnstileCompletion()) {
-                showDebugMessage('Captcha completed');
-                return true;
-            }
-
-            showDebugMessage('Captcha or anti-bot system detected, retrying...');
-            attempt++;
-            await delay(5000);
         }
-
-        // Check for the HTML element indicating CAPTCHA verification
-        let captchaVerified = document.querySelector('#countdown');
-        if (captchaVerified && captchaVerified.textContent.includes('Captcha verified! You can now click continue.')) {
-            showDebugMessage('Captcha verified message found');
-            return true;
-        }
-
-        showDebugMessage('Captcha not completed or message not found after max attempts');
         return false;
     }
 
-    async function main() {
-        while (true) {
-            showDebugMessage('Checking page...');
+    async function startScript() {
+        showInitialMessage();
+
+        let currentUrl = getOriginalLink();
+        if (currentUrl.startsWith('https://pandadevelopment.net/getkey?')) {
             if (await waitForCaptchaCompletion()) {
-                if (clickStyledContinueButton() ||
-                    clickButtonByClassAndText('relative', 'Continue') ||
-                    clickHighestCheckpointsButton() ||
-                    clickButton('Continue') ||
-                    clickButtonByHref('linkvertise')) {
-                    let currentUrl = getOriginalLink();
-                    if (currentUrl.includes('linkvertise')) {
-                        handleRedirect(currentUrl);
-                        return;
-                    }
-                }
+                if (clickStyledContinueButton()) return;
+                if (clickButtonByClassAndText('relative', 'Continue')) return;
+                if (clickHighestCheckpointsButton()) return;
+                if (clickButton('Continue')) return;
+                if (clickButtonByHref('continue')) return;
             } else {
-                showDebugMessage('Failed to complete captcha, retrying...');
+                if (clickStyledContinueButton()) return;
+                if (clickButtonByClassAndText('relative', 'Continue')) return;
+                if (clickHighestCheckpointsButton()) return;
+                if (clickButton('Continue')) return;
+                if (clickButtonByHref('continue')) return;
             }
-            await delay(5000);
+        } else if (currentUrl.startsWith('https://linkvertise.com/')) {
+            handleRedirect(currentUrl);
         }
     }
 
-    // Ejecutar la función principal
-    main();
-
+    startScript();
 })();
