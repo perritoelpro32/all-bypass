@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         Load Script from GitHub
+// @name         pandadeveloptmen bypass
 // @namespace    http://tampermonkey.net/
-// @version      1.0
-// @description  Load and execute a script from GitHub
-// @author       Your Name
+// @version      0.1
+// @description  bypass linkvertise.net
+// @author       OxyCoder
 // @match        *://*/*
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
