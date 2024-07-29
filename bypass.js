@@ -201,7 +201,10 @@
     }
 
     async function waitForCaptchaCompletion() {
-        while (true) {
+        let attempt = 0;
+        const maxAttempts = 3;
+
+        while (attempt < maxAttempts) {
             let captcha = detectAntiBotSystems();
             if (!captcha) {
                 showDebugMessage('No captcha detected');
@@ -209,12 +212,24 @@
             }
 
             if (checkReCaptchaCompletion() || checkTurnstileCompletion()) {
+                showDebugMessage('Captcha completed');
                 return true;
             }
 
-            showDebugMessage('Captcha or anti-bot system detected, waiting for 5 seconds...');
+            showDebugMessage('Captcha or anti-bot system detected, retrying...');
+            attempt++;
             await delay(5000);
         }
+
+        // Check for the HTML element indicating CAPTCHA verification
+        let captchaVerified = document.querySelector('#countdown');
+        if (captchaVerified && captchaVerified.textContent.includes('Captcha verified! You can now click continue.')) {
+            showDebugMessage('Captcha verified message found');
+            return true;
+        }
+
+        showDebugMessage('Captcha not completed or message not found after max attempts');
+        return false;
     }
 
     async function main() {
