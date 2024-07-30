@@ -7,9 +7,8 @@
 // @match        *://*.pandadevelopment.net/*
 // @match        *://*.linkvertise.com/*
 // @grant        GM_xmlhttpRequest
-// @grant        GM_addStyle
-// @grant        GM_setClipboard
 // @run-at       document-end
+// @icon         https://i.imgur.com/zzYx9th.png
 // ==/UserScript==
 
 (function() {
@@ -21,9 +20,9 @@
         let messageDiv = document.createElement('div');
         messageDiv.id = 'initial-message';
         messageDiv.style.position = 'fixed';
-        messageDiv.style.top = '10px';
-        messageDiv.style.left = '50%';
-        messageDiv.style.transform = 'translateX(-50%)';
+        messageDiv.style.top = '10px'; // Ajusta el margen superior
+        messageDiv.style.left = '50%'; // Centrar horizontalmente
+        messageDiv.style.transform = 'translateX(-50%)'; // Ajusta para alineación central
         messageDiv.style.backgroundColor = 'rgba(0,0,0,0.8)';
         messageDiv.style.color = 'white';
         messageDiv.style.padding = '10px';
@@ -82,7 +81,9 @@
                     try {
                         let data = JSON.parse(response.responseText);
                         if (data && data.Status === 'Success' && data.key) {
-                            window.location.href = data.key;
+                            setTimeout(() => {
+                                window.location.href = data.key;
+                            }, 8000);
                         }
                     } catch (e) {}
                 }
@@ -91,9 +92,9 @@
         });
     }
 
-    function clickButton(buttonText) {
+    function clickButtonByText(text) {
         let button = Array.from(document.querySelectorAll('button'))
-            .find(btn => btn.textContent.trim() === buttonText);
+            .find(btn => btn.textContent.trim() === text);
 
         if (button) {
             simulateMouseMovement(button);
@@ -107,6 +108,19 @@
     function clickButtonByHref(urlFragment) {
         let button = Array.from(document.querySelectorAll('a'))
             .find(link => link.href.includes(urlFragment));
+
+        if (button) {
+            simulateMouseMovement(button);
+            scrollPage();
+            clickButtonWithDelay(button);
+            return true;
+        }
+        return false;
+    }
+
+    function clickButtonByClassAndText(className, buttonText) {
+        let button = Array.from(document.querySelectorAll(`button.${className}`))
+            .find(btn => btn.textContent.trim() === buttonText);
 
         if (button) {
             simulateMouseMovement(button);
@@ -141,22 +155,9 @@
         return false;
     }
 
-    function clickButtonByClassAndText(className, buttonText) {
-        let button = Array.from(document.querySelectorAll(`button.${className}`))
-            .find(btn => btn.textContent.trim() === buttonText);
-
-        if (button) {
-            simulateMouseMovement(button);
-            scrollPage();
-            clickButtonWithDelay(button);
-            return true;
-        }
-        return false;
-    }
-
-    function clickStyledContinueButton() {
-        let button = Array.from(document.querySelectorAll('button'))
-            .find(btn => btn.id === 'submitButton' && btn.querySelector('span')?.textContent.trim() === 'Continue');
+    function clickLinkvertiseButton() {
+        let button = Array.from(document.querySelectorAll('a.relative'))
+            .find(a => a.querySelector('span')?.textContent.trim() === 'Linkvertise');
 
         if (button) {
             simulateMouseMovement(button);
@@ -171,7 +172,8 @@
         return document.querySelector('.g-recaptcha') ||
                document.querySelector('.h-captcha') ||
                document.querySelector('#cf-turnstile') ||
-               document.querySelector('#captcha');
+               document.querySelector('#captcha') ||
+               document.body.textContent.includes("Token mismatch, session invalidated!");
     }
 
     function checkReCaptchaCompletion() {
@@ -185,11 +187,10 @@
     }
 
     async function waitForCaptchaCompletion() {
-        let captchaDetected = detectAntiBotSystems();
-        if (captchaDetected) {
-            let attempt = 0;
-            const maxAttempts = 3;
+        const maxAttempts = 3;
+        let attempt = 0;
 
+        if (detectAntiBotSystems()) {
             while (attempt < maxAttempts) {
                 if (checkReCaptchaCompletion() || checkTurnstileCompletion()) {
                     return true;
@@ -207,17 +208,17 @@
         let currentUrl = getOriginalLink();
         if (currentUrl.startsWith('https://pandadevelopment.net/getkey?')) {
             if (await waitForCaptchaCompletion()) {
-                if (clickStyledContinueButton()) return;
                 if (clickButtonByClassAndText('relative', 'Continue')) return;
                 if (clickHighestCheckpointsButton()) return;
-                if (clickButton('Continue')) return;
+                if (clickButtonByText('Continue')) return;
                 if (clickButtonByHref('continue')) return;
+                if (clickLinkvertiseButton()) return;
             } else {
-                if (clickStyledContinueButton()) return;
                 if (clickButtonByClassAndText('relative', 'Continue')) return;
                 if (clickHighestCheckpointsButton()) return;
-                if (clickButton('Continue')) return;
+                if (clickButtonByText('Continue')) return;
                 if (clickButtonByHref('continue')) return;
+                if (clickLinkvertiseButton()) return;
             }
         } else if (currentUrl.startsWith('https://linkvertise.com/')) {
             handleRedirect(currentUrl);
