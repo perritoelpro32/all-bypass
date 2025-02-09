@@ -6,7 +6,7 @@
 // @author       khoanontop & OxyCoder
 
 // @match        https://*/*
-// @icon         https://cdn141.picsart.com/351217840073211.png
+// @icon         https://logospng.org/download/c-plus-plus/c-plus-plus-1024.png
 
 // @run-at       document-end
 // @grant        GM_xmlhttpRequest
