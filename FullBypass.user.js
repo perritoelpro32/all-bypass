@@ -3,13 +3,18 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Bypass roblox cheats key!
-// @author       khoanontop
+// @author       khoanontop & OxyCoder
+
 // @match        https://*/*
 // @icon         https://cdn141.picsart.com/351217840073211.png
+
 // @run-at       document-end
 // @grant        GM_xmlhttpRequest
 // @grant        GM_notification
 // @grant        GM_openInTab
+
+// @downloadURL https://github.com/perritoelpro32/all-bypass/raw/main/FullBypass.user.js
+// @updateURL https://github.com/perritoelpro32/all-bypass/raw/main/FullBypass.user.js
 // ==/UserScript==
 
 (function () {
@@ -59,14 +64,7 @@
                 }
             }
         }, 5000);
-        if (url.includes("https://ads.luarmor.net/get_key?for=Lootlab_Test-CGzonCNhjjyI") || url.includes("https://ads.luarmor.net/get_key?for=-CGzonCNhjjyI")) {
-            var luarmorBtn = document.querySelector("#nextbtn");
-            if (luarmorBtn) {
-                luarmorBtn.click();
-            } else {
-                console.log("error");
-            }
-        }
+        // trigonevo
         if (url.includes("trigonevo.fun/whitelist/?HWID=")) {
             const trigonBtn = document.querySelector("div.glass-light.bg-blue-600.bg-opacity-20.hover-glow.cursor-pointer.rounded-lg.p-4.border-l-4.border-blue-400.shadow-md.relative.overflow-hidden");
             if (trigonBtn) {
@@ -76,6 +74,7 @@
                 debugWindow("whitelist");
             }
         }
+        // fluxus
         if (url.startsWith("https://linkvertise.com/580726/fluxus1")) {
             window.location.href = "https://flux.li/android/external/check1.php?hash={hash}";
         } else if (url.startsWith("https://flux.li/android/external/check1.php?hash={hash}")) {
@@ -127,6 +126,7 @@
                 }
             }, 1000);
         }
+        // zorara
         if (url === "https://getzorara.online:2053/") {
             setTimeout(function () {
                 const zoraraBtn = document.getElementById("generate-btn");
@@ -136,12 +136,15 @@
                 }
             });
         }
+        // fluxus PC
         if (url.includes("key.fluxteam.org")) {
             fluxusGen();
         }
+        // lootlinks
         if (url.includes("loot-link.com") || url.includes("lootdest.org") || url.includes("linkvertise.com")) {
             bypassLogic();
         }
+        // pandadevelopment
         if (url.includes("pandadevelopment.net/getkey?service=beeconhub")) {
             _0x561c75();
         }
@@ -154,9 +157,11 @@
                 }
             }, 5000);
         }
+        // keyguardian
         if (url.includes("https://keyguardian.org/a/1096?id=") || url.includes("https://keyguardian.org/a/1167?id=")) {
             _0x4af2f3();
         }
+        // codex
         if (url.startsWith("https://loot-links.com/s?mK6Z")) {
             debugWindow("wait 5 second");
             setTimeout(function () {
@@ -175,6 +180,7 @@
                 window.location.href = "https://mobile.codex.lol/?page=tasks";
             }, 5000);
         }
+        // arceus X
         if (url.includes("https://spdmteam.com/key-system-3?hwid=")) {
             window.location.href = "https://loot-link.com/s?qlbU";
         } else if (url.includes("https://spdmteam.com/key-system-2?hwid=")) {
@@ -188,6 +194,7 @@
         } else if (url.includes("https://loot-link.com/s?qlbU")) {
             window.location.href = "https://spdmteam.com/api/keysystem?step=3&advertiser=linkvertise&OS=ios";
         }
+        // swift
         if (url.startsWith("https://getswift.xyz/real/0/") || url.startsWith("https://getswift.xyz/real/1/") || url.startsWith("https://getswift.xyz/real/2/")) {
             setInterval(function () {
                 const _0x324f14 = document.querySelector("body > div > form > div.flex.flex-col.w-full.mb-\\[2rem\\].items-center > button");
@@ -200,6 +207,7 @@
         if (url.startsWith("https://getswift.xyz/real/3/")) {
             debugWindow("Please press 'Get Key'");
         }
+        // codex 2
         if (window.location.href.includes("https://mobile.codex.lol/")) {
             setTimeout(() => {
                 const _0x5064e7 = document.querySelector(".absolute.-inset-0\\.5.bg-red-500\\/30.opacity-20.rounded-lg.blur.group-hover\\:opacity-60.transition.duration-1000.group-hover\\:duration-200");
@@ -211,6 +219,7 @@
                 }
             }, 1000);
         }
+        // keyRBLX
         if (window.location.href.includes("https://keyrblx.com/")) {
             const _0x5706e9 = document.querySelector("button.mantine-Button-root span.mantine-Button-label");
             if (_0x5706e9) {
@@ -229,6 +238,7 @@
                 debugWindow("Click button");
             }
         }
+        // rekonise
         if (window.location.href.includes("rekonise.com/")) {
             let pathName = window.location.pathname;
             let rekoniseApi = "https://api.rekonise.com/social-unlocks" + pathName + "/unlock";
@@ -253,6 +263,7 @@
             });
         }
     });
+    // Logic for Linkvertise and Lootlabs
     function bypassLogic(i) {
         debugWindow(i, "Please wait to bypass");
         setTimeout(function () {
@@ -286,6 +297,7 @@
         return;
     });
 }
+    // fluxus 2
  function fluxusGen() {
     const _0x359395 = document.querySelector("button.generate-button");
     if (_0x359395) {
