@@ -14,8 +14,8 @@
 // @grant        GM_openInTab
 // @grant        window.close
 
-// @downloadURL https://github.com/perritoelpro32/all-bypass/raw/main/FullBypass.user.js
-// @updateURL https://github.com/perritoelpro32/all-bypass/raw/main/FullBypass.user.js
+// @downloadURL https://github.com/perritoelpro32/all-bypass/raw/main/KeyBypass.user.js
+// @updateURL https://github.com/perritoelpro32/all-bypass/raw/main/KeyBypass.user.js
 // ==/UserScript==
 
 (function () {
