@@ -12,6 +12,7 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_notification
 // @grant        GM_openInTab
+// @grant        window.close
 
 // @downloadURL https://github.com/perritoelpro32/all-bypass/raw/main/FullBypass.user.js
 // @updateURL https://github.com/perritoelpro32/all-bypass/raw/main/FullBypass.user.js
@@ -49,6 +50,7 @@
     function _0x44bf3f(_0x55ce10) {
         alert("Copied value: " + _0x55ce10);
     }
+
     window.addEventListener("load", function () {
         const url = window.location.href;
         let _0x52af0e = false;
@@ -223,7 +225,9 @@
         if (window.location.href.includes("https://keyrblx.com/")) {
             const _0x5706e9 = document.querySelector("button.mantine-Button-root span.mantine-Button-label");
             if (_0x5706e9) {
+                setTimeout(() => {
                 _0x5706e9.closest("button").click();
+            }, 7000);
             }
             const _0x16f417 = document.querySelector("button.mantine-Button-root span.mantine-Button-label");
             if (_0x16f417 && _0x16f417.textContent.trim() === "Copy") {
@@ -237,6 +241,50 @@
             } else {
                 debugWindow("Click button");
             }
+        }
+        // wp2hostt
+        if (url.includes("wp2hostt.com")) {
+            console.log("[Bypass] Estamos en WP2Hostt, verificando botón...");
+
+            let startButton = document.querySelector("#startButton");
+
+            if (!startButton) {
+                console.log("[Bypass] Botón no encontrado, no se ejecutará el script.");
+                return;
+            }
+
+            console.log("[Bypass] Botón detectado, buscando formulario...");
+
+            let form = document.querySelector("#getmylink");
+            if (!form) {
+                console.error("[Bypass] Formulario no encontrado.");
+                return;
+            }
+
+            // Obtener la URL de acción del formulario original
+            let originalUrl = form.getAttribute("action") || window.location.href;
+
+            // Crear un nuevo formulario para enviar los datos por POST
+            let newForm = document.createElement("form");
+            newForm.method = "POST";
+            newForm.action = originalUrl;
+            newForm.style.display = "none";
+
+            // Extraer los valores del formulario original y agregarlos al nuevo
+            let formData = new FormData(form);
+            for (let pair of formData.entries()) {
+                let input = document.createElement("input");
+                input.type = "hidden";
+                input.name = pair[0];
+                input.value = pair[1];
+                newForm.appendChild(input);
+            }
+
+            console.log("[Bypass] Formulario creado, enviando POST...");
+
+            // Agregar el formulario al documento y enviarlo automáticamente
+            document.body.appendChild(newForm);
+            newForm.submit();
         }
         // rekonise
         if (window.location.href.includes("rekonise.com/")) {
@@ -284,7 +332,7 @@
 
                         setTimeout(() => {
                             window.location.href = base64Decoded;
-                        }, 5000);
+                        }, 9000);
 
                     } catch (error) {
                         console.error("Error decoding URL:", error);
