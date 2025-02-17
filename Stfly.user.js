@@ -1,15 +1,12 @@
 // ==UserScript==
-// @name         Bypass Stfly
+// @name         Bypass Stfly, Airevue y Atravan
 // @namespace    http://tampermonkey.net/
-// @version      1.0
-// @description  Bypass stfly.biz
+// @version      2.0
+// @description  Bypass para stfly.biz, airevue.net y atravan.net
 // @author       OxyCoder
-// @icon         https://logospng.org/download/c-plus-plus/c-plus-plus-1024.png
 // @match        *://stfly.biz/*
 // @match        *://airevue.net/*
 // @match        *://atravan.net/*
-// @downloadURL  https://github.com/perritoelpro32/all-bypass/raw/main/Stfly.user.js
-// @updateURL    https://github.com/perritoelpro32/all-bypass/raw/main/Stfly.user.js
 // @grant        none
 // ==/UserScript==
 
@@ -20,11 +17,11 @@
         setTimeout(() => {
             let button = document.querySelector(selector);
             if (button) {
-                console.log(`🔘 Clicking button: ${selector}`);
+                console.log("🔘 Haciendo clic en el botón: ${selector}");
                 button.click();
-                if (callback) callback(); // Executes another function if passed as an argument
+                if (callback) callback(); // Ejecuta otra función si se pasa como argumento
             } else {
-                console.warn(`⚠️ Button not found: ${selector}`);
+                console.warn("⚠️ No se encontró el botón: ${selector}");
             }
         }, delay);
     }
@@ -33,57 +30,57 @@
         setTimeout(() => {
             let nextButton = [...document.querySelectorAll("button")].find(btn =>
                 btn.textContent.trim().toLowerCase().includes("next") ||
-                btn.textContent.trim().toLowerCase().includes("continue") ||
+                btn.textContent.trim().toLowerCase().includes("Continue") ||
                 btn.textContent.trim().toLowerCase().includes("step")
             );
             if (nextButton) {
-                console.log("➡️ Clicking 'Next' or 'Step' button.");
+                console.log("➡️ Haciendo clic en el botón 'Next' o 'Step'.");
                 nextButton.click();
             } else {
-                console.warn("⚠️ 'Next' or 'Step' button not found.");
+                console.warn("⚠️ No se encontró un botón 'Next' o 'Step'.");
             }
-        }, 1000); // Waits 1 second before searching for "Next" or "Step" button
+        }, 1000); // Espera 1 segundo antes de buscar el botón "Next" o "Step"
     }
 
     function bypassAirevueAtravan() {
-        setTimeout(() => { // Wait 1 second before executing the logic
+        setTimeout(() => { // Esperar 1 segundo antes de ejecutar la lógica
             let startButton = document.querySelector("button[id$='_start']");
             if (startButton) {
-                console.log("🚀 Clicking start button");
+                console.log("🚀 Haciendo clic en el botón de inicio");
                 startButton.click();
                 setTimeout(() => {
                     let verifyButton = document.querySelector("button[type='submit']");
                     if (verifyButton) {
-                        console.log("✅ Wait completed. Clicking the first verification button.");
+                        console.log("✅ Espera finalizada. Haciendo clic en el primer botón de verificación.");
                         verifyButton.click();
                         setTimeout(() => {
                             let secondSubmit = document.querySelector("button[type='submit']");
                             if (secondSubmit) {
-                                console.log("✅ Clicking the second verification button.");
+                                console.log("✅ Haciendo clic en el segundo botón de verificación.");
                                 secondSubmit.click();
-                                clickNextOrStep(); // Looks for "Next" or "Step" button after the second submit
+                                clickNextOrStep(); // Busca botón "Next" o "Step" después del segundo submit
                             } else {
-                                console.warn("⚠️ Second verification button not found.");
-                                clickNextOrStep(); // If no submit button is found, look for "Next" or "Step"
+                                console.warn("⚠️ No se encontró un segundo botón de verificación.");
+                                clickNextOrStep(); // Si no encuentra el submit, busca "Next" o "Step"
                             }
                         }, 1000);
                     } else {
-                        console.warn("⚠️ First verification button not found.");
+                        console.warn("⚠️ No se encontró el primer botón de verificación.");
                     }
                 }, 8000);
             } else {
-                console.warn("⚠️ Start button not found.");
+                console.warn("⚠️ No se encontró el botón de inicio.");
             }
-        }, 1000); // Wait 1 second before starting
+        }, 1000); // Esperar 1 segundo antes de comenzar
     }
 
     function bypassStfly() {
-        console.log("🚀 Clicking submit button on stfly.biz");
+        console.log("🚀 Haciendo clic en el botón de envío en stfly.biz");
         clickButton("button[type='submit']");
     }
 
     function initBypass() {
-        console.log("🔍 Starting bypass on: " + window.location.hostname);
+        console.log("🔍 Iniciando bypass en: " + window.location.hostname);
         if (window.location.hostname.includes("airevue.net") || window.location.hostname.includes("atravan.net")) {
             bypassAirevueAtravan();
         } else if (window.location.hostname.includes("stfly.biz")) {
@@ -91,6 +88,6 @@
         }
     }
 
-    // Starts the bypass immediately without waiting for the page to fully load
+    // Inicia el bypass inmediatamente sin esperar a que la página cargue completamente
     initBypass();
 })();
