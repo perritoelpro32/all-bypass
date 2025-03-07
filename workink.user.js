@@ -2,10 +2,11 @@
 // @name         Work.ink Bypass
 // @namespace    http://tampermonkey.net/
 // @version      1.0
-// @description  Bypasses Work.ink and handles social tasks properly with a debug panel
+// @description  Bypasses Work.ink
 // @author       OxyCoder
 // @match        *://work.ink/*
 // @match        *://workink.net/*
+// @icon         https://logospng.org/download/c-plus-plus/c-plus-plus-1024.png
 // @grant        none
 // @downloadURL https://raw.githubusercontent.com/perritoelpro32/all-bypass/main/workink.user.js
 // @updateURL https://raw.githubusercontent.com/perritoelpro32/all-bypass/main/workink.user.js
