@@ -7,6 +7,8 @@
 // @match        *://work.ink/*
 // @match        *://workink.net/*
 // @grant        none
+// @downloadURL https://raw.githubusercontent.com/perritoelpro32/all-bypass/main/workink.user.js
+// @updateURL https://raw.githubusercontent.com/perritoelpro32/all-bypass/main/workink.user.js
 // ==/UserScript==
 
 (function() {
