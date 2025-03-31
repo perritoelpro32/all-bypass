@@ -1,4 +1,4 @@
-# Scripts and Executors Bypass
+mi# Scripts and Executors Bypass
 
 This userscript provides a bypass for executors and scripts on Roblox. It is modifiable but please leave credits.
 
@@ -15,4 +15,4 @@ If you encounter any bugs, have questions, or need further assistance, please re
 
 ## Reporting
 - **GitHub Issues:** [Report an Issue](https://github.com/perritoelpro32/pandadeveolpment-bypass/issues)
-- **Discord:** [Join the Discord](https://discord.com/invite/Z8nvVmsG9B)
+- **Discord:** Because hacks, my main account and all alts, have been banned. i cant use discord for 2 years. so, only chat me with github. sorry
