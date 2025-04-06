@@ -13,6 +13,8 @@ This userscript provides a bypass for executors and scripts on Roblox. It is mod
 ## Issues
 If you encounter any bugs, have questions, or need further assistance, please report them on GitHub or reach out via Discord.
 
+Some of this scripts dont work anymore, you can modify and share it
+
 ## Reporting
 - **GitHub Issues:** [Report an Issue](https://github.com/perritoelpro32/pandadeveolpment-bypass/issues)
 - **Discord:** Because hacks, my main account and all alts, have been banned. i cant use discord for 2 years. so, temp acc: @z3r0d4
