@@ -261,16 +261,13 @@
                 return;
             }
 
-            // Obtener la URL de acción del formulario original
             let originalUrl = form.getAttribute("action") || window.location.href;
 
-            // Crear un nuevo formulario para enviar los datos por POST
             let newForm = document.createElement("form");
             newForm.method = "POST";
             newForm.action = originalUrl;
             newForm.style.display = "none";
 
-            // Extraer los valores del formulario original y agregarlos al nuevo
             let formData = new FormData(form);
             for (let pair of formData.entries()) {
                 let input = document.createElement("input");
@@ -282,7 +279,6 @@
 
             console.log("[Bypass] Formulario creado, enviando POST...");
 
-            // Agregar el formulario al documento y enviarlo automáticamente
             document.body.appendChild(newForm);
             newForm.submit();
         }
